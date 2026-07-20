@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matchanalys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">MATCH<span>ANALYS</span></div>
+    <div class="tag" id="statusTag">steg 1 av 3</div>
+  </header>
+
+  <!-- STEG 1: Ladda upp match -->
+  <section id="step-upload" class="step active">
+    <div class="eyebrow">01 — matchen</div>
+    <h2>Ladda upp hela matchen</h2>
+    <p class="lede">Videon skickas till din egen server och bearbetas där med ffmpeg — ingen CSP-spärr, ingen storleksbegränsning från webbläsaren.</p>
+
+    <div class="panel">
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="videoInput" accept="video/*">
+        <div class="dz-label"><b>Klicka för att välja en videofil</b><br>eller släpp den här</div>
+      </div>
+      <div class="hint" id="uploadHint">Stöder de flesta vanliga videoformat (MP4, MOV, HEVC osv) — allt avkodas server-side.</div>
+      <div class="progress" id="uploadProgress"><div class="progress-bar" id="uploadProgressBar"></div></div>
+      <div class="status-text" id="uploadStatus"></div>
+    </div>
+  </section>
+
+  <!-- STEG 2: Peka ut spelaren -->
+  <section id="step-player" class="step">
+    <div class="eyebrow">02 — spelaren</div>
+    <h2>Vem är du i matchen?</h2>
+    <p class="lede">Klicka på dig själv i bilden nedan, och beskriv din tröja så AI:n kan hitta dig i resten av matchen.</p>
+
+    <div class="panel">
+      <div class="ref-wrap" id="refWrap">
+        <img id="refImg" alt="Bildruta från matchen">
+        <div class="marker" id="marker" style="display:none;"></div>
+      </div>
+      <div class="hint">Klickat fel? Klicka bara igen någon annanstans i bilden.</div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="jerseyDesc">Tröja (färg / nummer)</label>
+          <input type="text" id="jerseyDesc" placeholder="T.ex. gul-blå tröja, nummer 18">
+        </div>
+        <div class="field">
+          <label for="position">Din position</label>
+          <select id="position">
+            <option value="Målvakt">Målvakt</option>
+            <option value="Försvarare" selected>Försvarare</option>
+            <option value="Mittfältare">Mittfältare</option>
+            <option value="Anfallare">Anfallare</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button class="btn-primary" id="analyzeBtn" disabled>Analysera matchen</button>
+        <span class="status-text" id="analyzeStatus"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEG 3: Resultat -->
+  <section id="step-result" class="step">
+    <div class="eyebrow">03 — resultat</div>
+    <h2>Din matchanalys</h2>
+
+    <div class="result-grid">
+      <div class="panel result-col">
+        <h3 class="result-h strengths">Styrkor</h3>
+        <ul id="strengthsList" class="result-list"></ul>
+      </div>
+      <div class="panel result-col">
+        <h3 class="result-h weaknesses">Att jobba på</h3>
+        <ul id="weaknessesList" class="result-list"></ul>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <h3 class="result-h exercises">Träningsövningar</h3>
+      <div id="exercisesList" class="exercises-grid"></div>
+    </div>
+
+    <button class="btn-secondary" id="restartBtn" style="margin-top:24px;">Analysera en ny match</button>
+  </section>
+
+  <footer>
+    <p>Detta är en tidig version. Analysen bygger på ett antal stickprovsbilder ur matchen, inte fullständig spårning — se den som en utgångspunkt, inte exakt statistik.</p>
+  </footer>
+
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
